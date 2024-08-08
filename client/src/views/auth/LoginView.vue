@@ -1,0 +1,52 @@
+<template>
+  <GuestLayout class="flex justify-center items-center">
+    <Form>
+      <div class="mt-24 mb-20 text-center">
+        <h1 class="text-3xl font-bold mb-2 text-white">Login</h1>
+        <h3 class="text-md italic tracking-tight text-white/80">
+          The best experiences are just a click away. Let’s get you logged in
+        </h3>
+      </div>
+
+      <div class="space-y-6 mt-6">
+        <BaseInputGroup labelFor="email" name="email" type="email" v-model="formData.email" />
+        <BaseInputGroup
+          labelFor="password"
+          name="password"
+          type="password"
+          v-model="formData.password"
+        />
+      </div>
+      <div class="text-white flex justify-between flex-1 px-6 sm:px-0">
+        <BaseCheckbox label="Remember Me" v-model="formData.rememberMe" />
+        <Link linkText="Forgot Password" routeName="Forgot Password" />
+      </div>
+      <div class="flex justify-center">
+        <BaseFormButton buttonType="sumbit">Login</BaseFormButton>
+      </div>
+    </Form>
+  </GuestLayout>
+</template>
+
+<script setup lang="ts">
+import GuestLayout from '@/components/layout/GuestLayout.vue'
+import Form from '@/components/form/Form.vue'
+import BaseInputGroup from '@/components/form/BaseInputGroup.vue'
+import BaseFormButton from '@/components/form/BaseFormButton.vue'
+import BaseCheckbox from '@/components/form/BaseCheckbox.vue'
+import Link from '@/components/Link.vue'
+
+import { reactive } from 'vue'
+
+interface loginData {
+  email: string
+  password: string
+  rememberMe: boolean
+}
+
+const formData = reactive<loginData>({
+  email: '',
+  password: '',
+  rememberMe: false
+})
+</script>
