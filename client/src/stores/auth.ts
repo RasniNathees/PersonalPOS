@@ -1,24 +1,34 @@
 import { defineStore } from 'pinia'
 import apiClient from '@/services/ApiClient'
 import type { Icredentials } from '@/types/Credentials'
+
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuthenticated: false
   }),
-  getters: {},
+  getters: {
+    getIsAuthenticated(state) {
+      return () => state.isAuthenticated
+    }
+  },
 
   actions: {
     async login(loginData: Icredentials) {
       const body = {
         grant_type: 'password',
-        client_id: '9cb7e31c-f9c2-492d-82f1-c72916fa766d',
-        client_secret: 'DZxGDCgIPOUwZVleHTSyTcyjBOiAm0qs3k0cd2QX',
+        client_id: `${import.meta.env.VITE_Client_ID}`,
+        client_secret: `${import.meta.env.VITE_Client_Secret}`,
         username: loginData.email,
         password: loginData.password,
         scope: '*'
       }
-      const response = await apiClient.post('/oauth/token', body)
-      console.log(response.data)
+      try {
+        const response = await apiClient.post('/oauth/token', body)
+        this.isAuthenticated = true
+      } catch (error) {
+        // console.log(error)
+        // console.log(error.response.data.errors)
+      }
     }
   }
 })
