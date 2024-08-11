@@ -39,6 +39,7 @@ import Link from '@/components/Link.vue'
 
 import { reactive } from 'vue'
 import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 // types
 import type { Icredentials } from '@/types/Credentials'
 
@@ -47,9 +48,15 @@ const formData = reactive<Icredentials>({
   password: '',
   rememberMe: false
 })
-const auth = useAuthStore()
 
-const login = (): void => {
-  auth.login(formData)
+const auth = useAuthStore()
+const router = useRouter()
+
+const login = async (): Promise<void> => {
+  await auth.login(formData)
+  const isAuthenticated = auth.getIsAuthenticated()
+  if (isAuthenticated) {
+    router.push({ name: 'Dashboard' })
+  }
 }
 </script>
