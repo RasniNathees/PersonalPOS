@@ -22,13 +22,14 @@
         <Link linkText="Forgot Password" routeName="Forgot Password" />
       </div>
       <div class="flex justify-center">
-        <BaseFormButton buttonType="sumbit">Login</BaseFormButton>
+        <BaseFormButton buttonType="button" @click="login">Login</BaseFormButton>
       </div>
     </Form>
   </GuestLayout>
 </template>
 
 <script setup lang="ts">
+// GUI
 import GuestLayout from '@/components/layout/GuestLayout.vue'
 import Form from '@/components/form/Form.vue'
 import BaseInputGroup from '@/components/form/BaseInputGroup.vue'
@@ -37,16 +38,18 @@ import BaseCheckbox from '@/components/form/BaseCheckbox.vue'
 import Link from '@/components/Link.vue'
 
 import { reactive } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+// types
+import type { Icredentials } from '@/types/Credentials'
 
-interface loginData {
-  email: string
-  password: string
-  rememberMe: boolean
-}
-
-const formData = reactive<loginData>({
+const formData = reactive<Icredentials>({
   email: '',
   password: '',
   rememberMe: false
 })
+const auth = useAuthStore()
+
+const login = (): void => {
+  auth.login(formData)
+}
 </script>
