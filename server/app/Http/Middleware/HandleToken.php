@@ -26,9 +26,10 @@ class HandleToken
         if ($access_token) {
             $cookie_access = cookie('access_token', $access_token, $expires_in / 60, httpOnly: true, sameSite: 'Lax');
             $cookie_refresh = cookie('refresh_token', $refresh_token, 60 * 24 * 30, httpOnly: true, sameSite: 'Lax');
-            $response = response($response->getContent())->withCookie($cookie_refresh, $cookie_access);
+            $response = response($response->getContent())->withCookie($cookie_refresh)->withCookie($cookie_access);
+          
         }
 
-        return $response;
+        return response()->json(['success'=>'Login sucesse']);
     }
 }
