@@ -57,6 +57,8 @@ it('can successfully get token', function () {
 
     $this->post('/api/oauth/token', $data)
         ->assertStatus(200)
+        ->assertCookie('refresh_token')
+        ->assertCookie('access_token')
         ->assertJsonStructure([
             'token_type',
             'expires_in',

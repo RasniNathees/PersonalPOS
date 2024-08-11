@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\ValidateAuthLoginRequest;
-
+use App\Http\Middleware\HandleToken;
 
 
 Route::group([
@@ -16,5 +16,5 @@ Route::group([
         'uses' => 'AccessTokenController@issueToken',
         'as' => 'token',
         'middleware' => 'throttle',
-    ])->middleware(ValidateAuthLoginRequest::class);
+    ])->middleware(ValidateAuthLoginRequest::class,HandleToken::class);
 });
