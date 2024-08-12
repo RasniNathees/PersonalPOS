@@ -1,7 +1,7 @@
 <template>
   <GuestLayout class="flex justify-center items-center">
     <Form>
-      <div class="mt-24 mb-20 text-center">
+      <div class="mt-24 mb-18 text-center">
         <h1 class="text-3xl font-bold mb-2 text-white">Login</h1>
         <h3 class="text-md italic tracking-tight text-white/80">
           The best experiences are just a click away. Let’s get you logged in
@@ -21,6 +21,7 @@
         <BaseCheckbox label="Remember Me" v-model="formData.rememberMe" />
         <Link linkText="Forgot Password" routeName="Forgot Password" />
       </div>
+
       <div class="flex justify-center">
         <BaseFormButton buttonType="button" @click="login">Login</BaseFormButton>
       </div>
@@ -40,8 +41,12 @@ import Link from '@/components/Link.vue'
 import { reactive, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+
 // types
 import type { Icredentials } from '@/types/Credentials'
+
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
 
 const formData = reactive<Icredentials>({
   email: '',
@@ -49,16 +54,23 @@ const formData = reactive<Icredentials>({
   rememberMe: false
 })
 
+const schema = yup.object({
+  email: yup.string().email('Invalid email').required('Email is required'),
+  password: yup.string().required('Password is required')
+})
+const { handleSubmit } = useForm({
+  validationSchema: schema
+})
 const auth = useAuthStore()
 const router = useRouter()
 
-const login = async (): Promise<void> => {
+const login = handleSubmit(async (): Promise<void> => {
   await auth.login(formData)
   const isAuthenticated = auth.getIsAuthenticated()
   if (isAuthenticated) {
     router.push({ name: 'Dashboard' })
   }
-}
+})
 
 onMounted(() => {
   const isAuthenticated = auth.getIsAuthenticated()
