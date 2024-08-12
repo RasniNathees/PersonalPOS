@@ -23,6 +23,9 @@ importers:
       vue-router:
         specifier: ^4.3.3
         version: 4.4.2(vue@3.4.35(typescript@5.4.5))
+      vue3-toastify:
+        specifier: ^0.2.2
+        version: 0.2.2(vue@3.4.35(typescript@5.4.5))
       yup:
         specifier: ^1.4.0
         version: 1.4.0
@@ -3033,6 +3036,15 @@ packages:
     hasBin: true
     peerDependencies:
       typescript: '>=5.0.0'
+
+  vue3-toastify@0.2.2:
+    resolution: {integrity: sha512-D8pmIp2UeU8MU1OY7GktA70HviZ38b1RagN82P7tFu3abUD86w+PjfmbdRch4QVtjVxK+eqKLvi5cXJRndwJfw==}
+    engines: {node: '>=18.18.0', npm: '>=9.0.0'}
+    peerDependencies:
+      vue: '>=3.2.0'
+    peerDependenciesMeta:
+      vue:
+        optional: true
 
   vue@3.4.35:
     resolution: {integrity: sha512-+fl/GLmI4GPileHftVlCdB7fUL4aziPcqTudpTGXCT8s+iZWuOCeNEB5haX6Uz2IpRrbEXOgIFbe+XciCuGbNQ==}
@@ -6335,6 +6347,10 @@ snapshots:
       '@vue/language-core': 2.0.29(typescript@5.4.5)
       semver: 7.6.3
       typescript: 5.4.5
+
+  vue3-toastify@0.2.2(vue@3.4.35(typescript@5.4.5)):
+    optionalDependencies:
+      vue: 3.4.35(typescript@5.4.5)
 
   vue@3.4.35(typescript@5.4.5):
     dependencies:
