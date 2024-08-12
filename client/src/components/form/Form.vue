@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-96 w-full border-top-tricolor mx-10 md:mx-0 max-h-[700px] bg-black opacity-60 sm:p-8 lg:p-12 rounded-lg shadow-md"
+    class="max-w-96 w-full border-top-tricolor mx-10 md:mx-0 max-h-full bg-black opacity-60 sm:p-8 lg:p-12 rounded-lg shadow-md"
   >
     <form @submit.prevent="" class="space-y-6">
       <slot></slot>
