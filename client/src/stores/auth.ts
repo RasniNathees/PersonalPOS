@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
 import apiClient from '@/services/ApiClient'
+import { handleError } from '@/helper/HandleErrors'
+
+// types
 import type { Icredentials } from '@/types/Credentials'
 
 export const useAuthStore = defineStore('auth', {
@@ -23,11 +26,10 @@ export const useAuthStore = defineStore('auth', {
         scope: '*'
       }
       try {
-        const response = await apiClient.post('/oauth/token', body)
+        await apiClient.post('/oauth/token', body)
         this.isAuthenticated = true
-      } catch (error) {
-        // console.log(error)
-        // console.log(error.response.data.errors)
+      } catch (error: unknown) {
+        handleError(error)
       }
     }
   }
