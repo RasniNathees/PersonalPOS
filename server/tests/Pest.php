@@ -30,7 +30,12 @@ uses(
 expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
+expect()->extend('toHaveDatabaseRecord',function( array $data){
+    test()->assertDatabaseHas($this->value, $data);
 
+    // Return $this to allow chaining
+    return $this;
+});
 /*
 |--------------------------------------------------------------------------
 | Functions
