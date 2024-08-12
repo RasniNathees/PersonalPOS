@@ -38,7 +38,7 @@ import BaseFormButton from '@/components/form/BaseFormButton.vue'
 import BaseCheckbox from '@/components/form/BaseCheckbox.vue'
 import Link from '@/components/Link.vue'
 
-import { reactive, onMounted } from 'vue'
+import { reactive, onMounted, computed } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
@@ -73,7 +73,7 @@ const login = handleSubmit(async (): Promise<void> => {
 })
 
 onMounted(() => {
-  const isAuthenticated = auth.getIsAuthenticated()
+  const isAuthenticated = computed(() => auth.getIsAuthenticated())
   if (isAuthenticated) {
     router.push({ name: 'Dashboard' })
   }
