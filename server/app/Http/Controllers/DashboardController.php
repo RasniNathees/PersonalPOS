@@ -4,18 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Services\UserService;
 
 class DashboardController extends Controller
 {
+    private $userService;
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-      $user =   Auth::user();
-     
-      return response()->json($user,200);
+        
+        $user = Auth::user();
+
+        $userData = $this->userService->getUserDataWithProfile($user->id);
+
+        return response()->json($userData, 200);
+
     }
 
     /**
