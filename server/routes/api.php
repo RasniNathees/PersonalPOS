@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\ValidateAuthLoginRequest;
@@ -18,3 +19,5 @@ Route::group([
         'middleware' => 'throttle',
     ])->middleware(ValidateAuthLoginRequest::class,HandleToken::class);
 });
+
+Route::get('/dashboard',[DashboardController::class,'index'])->middleware('auth:api');
