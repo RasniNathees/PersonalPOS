@@ -1,0 +1,50 @@
+name: Auto Merge and Rebase
+
+on:
+  push:
+    branches:
+      - server
+      - client
+
+jobs:
+  merge-and-rebase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: git config user.name "GitHub Actions" && git config user.email "actions@github.com"
+
+      - name: Merge client into dev
+        if: github.ref == 'refs/heads/client'
+        run: |
+          git checkout dev
+          git pull origin dev
+          git merge client --no-ff --commit -m "Merge client into dev"
+          git push origin dev
+
+      - name: Merge server into dev
+        if: github.ref == 'refs/heads/server'
+        run: |
+          git checkout dev
+          git pull origin dev
+          git merge server --no-ff --commit -m "Merge server into dev"
+          git push origin dev
+
+      - name: Rebase client onto dev
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          git checkout client
+          git pull origin client
+          git rebase dev
+          git push origin client --force
+
+      - name: Rebase server onto dev
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          git checkout server
+          git pull origin server
+          git rebase dev
+          git push origin server --force
