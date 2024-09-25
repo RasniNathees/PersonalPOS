@@ -26,16 +26,27 @@ export const useAuthStore = defineStore('auth', {
         scope: '*'
       }
       try {
-       const res =  await apiClient.post('/oauth/token', body)
-       
+        await apiClient.post('/oauth/token', body)
+        localStorage.setItem('auth', 'true');
         this.isAuthenticated = true
       } catch (error: unknown) {
         handleError(error)
       }
     },
     async checkAuth(){
-     const res = await apiClient.get('/checkAuth')
-      console.log(res)
+      try{
+        const res = await apiClient.get('/checkAuth')
+        this.isAuthenticated = true
+        localStorage.setItem('user', JSON.stringify(res.data));
+
+
+      }
+      catch (error: unknown) {
+        handleError(error)
+        this.isAuthenticated = false
+
+      }
+    
     }
   }
 })

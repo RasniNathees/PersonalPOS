@@ -72,10 +72,4 @@ const login = handleSubmit(async (): Promise<void> => {
   }
 })
 
-// onMounted(() => {
-//   const isAuthenticated = computed(() => auth.getIsAuthenticated())
-//   if (isAuthenticated) {
-//     router.push({ name: 'Dashboard' })
-//   }
-// })
 </script>
